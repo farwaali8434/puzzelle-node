@@ -1,4 +1,7 @@
 import PuzzleModal from "./modals";
+const { uploadImage } = require("../../utils/upload");
+const fs = require("fs");
+
 module.exports.createPuzzle = async (req, res) => {
   try {
     const source =
@@ -187,6 +190,22 @@ module.exports.softDeletePuzzle = async (req, res) => {
     puzzle.deletedAt = deletedDate;
     await puzzle.save();
     return res.status(200).json({ message: "Puzzle is deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+module.exports.uploadPuzzleImage = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No image provided" });
+    }
+
+    const imageUrl = await uploadImage(req.file.path);
+
+    fs.unlinkSync(req.file.path); // clean up the temp file, it's on Cloudinary now
+
+    return res.status(200).json({ imageUrl });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong" });
