@@ -21,7 +21,7 @@ module.exports.createPuzzle = async (req, res) => {
 
 module.exports.getPuzzleById = async (req, res) => {
   try {
-    const puzzle = await PuzzleModel.findById(req.params.id);
+    const puzzle = await PuzzleModal.findById(req.params.id);
 
     if (!puzzle) {
       return res.status(404).json({ message: "Puzzle not found" });
@@ -100,7 +100,7 @@ module.exports.getAllPuzzles = async (req, res) => {
       },
     ];
 
-    const result = await PuzzleModel.aggregate(query);
+    const result = await PuzzleModal.aggregate(query);
     const data = result[0].data || [];
     const total = result[0].total[0]?.count || 0;
 
@@ -143,7 +143,7 @@ module.exports.getMyPuzzles = async (res, req) => {
         },
       },
     ];
-    const result = await PuzzleModel.aggregate(query);
+    const result = await PuzzleModal.aggregate(query);
     const data = result[0].data || [];
     const total = result[0].total[0]?.count || 0;
 
