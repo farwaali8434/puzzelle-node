@@ -6,12 +6,14 @@ const app = express();
 // app.get("/", (req, res) => {
 //   res.send("Hello from Puzzelle backend!");
 // });
-const userRoutes = require("./api/users/routes");
-const puzzleRoutes = require("./api/puzzle/routes");
-const paymentRoutes = require("./api/payment/routes")
+const userRoutes = require("./apis/users/routes");
+const puzzleRoutes = require("./apis/puzzle/routes");
+const paymentRoutes = require("./apis/payment/routes");
+const playDataRoutes = require ("./apis/playData/routes")
 app.use("/api/user", userRoutes);
 app.use("api/puzzle", puzzleRoutes);
-app.use("/api/payments", paymentRoutes).
+app.use("/api/payments", paymentRoutes);
+app.use("/api/plays", playDataRoutes);
 app.listen(3001, () => {
   console.log("Puzzelle backend running on port 3001");
 });
