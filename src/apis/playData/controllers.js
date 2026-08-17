@@ -4,7 +4,7 @@ module.exports.createPlay = async (req, res) => {
   try {
     const { playerType, sessionId, puzzleId } = req.body;
 
-    const puzzle = await PuzzleModel.findById(puzzleId);
+    const puzzle = await PuzzleModal.findById(puzzleId);
     if (!puzzle) {
       return res.status(404).json({ message: "Puzzle not found" });
     }
@@ -56,7 +56,7 @@ module.exports.getPlay = async (req, res) => {
 
 module.exports.updatePlay = async (req, res) => {
   try {
-    const play = await PlayDataModel.findById(req.params.id);
+    const play = await PlayDataModal.findById(req.params.id);
     if (!play) {
       return res.status(404).json({ message: "Play not found" });
     }
@@ -83,7 +83,7 @@ module.exports.updatePlay = async (req, res) => {
       updateData.$set = { status: "abandoned", hiddenAt: new Date() };
     }
 
-    const updatedPlay = await PlayDataModel.findByIdAndUpdate(
+    const updatedPlay = await PlayDataModal.findByIdAndUpdate(
       req.params.id,
       updateData,
       { new: true },
@@ -117,7 +117,7 @@ module.exports.myPlays = async (req, res) => {
       { $unwind: "$puzzle" },
     ];
 
-    const myPlays = await PlayDataModel.aggregate(query);
+    const myPlays = await PlayDataModal.aggregate(query);
 
     return res.status(200).json({ plays: myPlays });
   } catch (error) {

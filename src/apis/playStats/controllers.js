@@ -17,7 +17,7 @@ module.exports.getPuzzleStats = async (req, res) => {
 
 module.exports.getMyPuzzleStats = async (req, res) => {
   try {
-    const stats = await PlayStatsModel.find({ createdBy: req.userId });
+    const stats = await PlayStatsModal.find({ createdBy: req.userId });
     return res.status(200).json({ stats });
   } catch (error) {
     console.log(error);
